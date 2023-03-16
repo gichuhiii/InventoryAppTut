@@ -34,6 +34,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
  */
 class ItemDetailFragment : Fragment() {
 
+    private val navigationArgs: ItemDetailFragmentArgs by navArgs()
     lateinit var item: Item
 
     private val viewModel: InventoryViewModel by activityViewModels {
@@ -41,15 +42,6 @@ class ItemDetailFragment : Fragment() {
             (activity?.application as InventoryApplication).database.itemDao()
         )
     }
-    //takes an instance of the item entity as the parameter and returns nothing
-    private fun bind(item: Item) {
-        binding.apply {
-            itemName.text = item.itemName
-            itemPrice.text = item.getFormattedPrice()
-            itemCount.text = item.quantityInStock.toString()
-        }
-    }
-    private val navigationArgs: ItemDetailFragmentArgs by navArgs()
 
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
@@ -61,6 +53,15 @@ class ItemDetailFragment : Fragment() {
     ): View? {
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         return binding.root
+    }
+    //takes an instance of the item entity as the parameter and returns nothing
+    private fun bind(item: Item) {
+        binding.apply {
+            itemName.text = item.itemName
+            itemPrice.text = item.getFormattedPrice()
+            itemCount.text = item.quantityInStock.toString()
+            sellItem.setOnClickListener { viewModel.sellItem(item) }
+        }
     }
 
     /**

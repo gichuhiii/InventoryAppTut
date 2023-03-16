@@ -26,13 +26,17 @@ import kotlinx.coroutines.launch
  *
  */
 class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
+    //for the items from db
+    val allItems: LiveData<List<Item>> = itemDao.getItems().asLiveData()
 
     //takes an instance of the entity class and updates the db
     private fun updateItem(item: Item) {
         viewModelScope.launch {
             itemDao.update(item)
         }
-        //check if quantity is greater than 0
+    }
+
+        //check if quantity is greater than 0 and sell item if not
         fun sellItem(item: Item) {
             if (item.quantityInStock > 0) {
                 //decreases no. of what's in stock by 1
@@ -41,15 +45,14 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
                 updateItem(newItem)
             }
         }
-    }
+
 
     //takes in id and returns the item from db
     fun retrieveItem(id: Int): LiveData<Item> {
         return itemDao.getItem(id).asLiveData()
     }
 
-    //for the items from db
-    val allItems: LiveData<List<Item>> = itemDao.getItems().asLiveData()
+
     /**
      * Inserts the new Item into database.
      */
