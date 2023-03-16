@@ -46,6 +46,7 @@ abstract class ItemRoomDatabase : RoomDatabase() {
                     // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
                     .build()
+
                 INSTANCE = instance
                 // return instance
                 instance
