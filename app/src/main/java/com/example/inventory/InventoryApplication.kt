@@ -16,11 +16,10 @@
 package com.example.inventory
 
 import android.app.Application
-import data.ItemRoomDatabase
+import com.example.inventory.data.ItemRoomDatabase
 
-class InventoryApplication : Application(){
-    val database: ItemRoomDatabase by lazy {
-        //instantiate db
-        ItemRoomDatabase.getDatabase(this)
-    }
+class InventoryApplication : Application() {
+    // Using by lazy so the database and the repository are only created when they're needed
+    // rather than when the application starts
+    val database: ItemRoomDatabase by lazy { ItemRoomDatabase.getDatabase(this) }
 }
