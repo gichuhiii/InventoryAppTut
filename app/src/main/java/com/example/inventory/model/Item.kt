@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-/**
- * Inserts the new Item into database.
- */
+
+ //Inserts the new Item into database.
+
 @Entity
     data class Item(
         @PrimaryKey(autoGenerate = true)
